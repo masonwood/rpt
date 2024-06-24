@@ -11,10 +11,6 @@ library(qpdf)
 
 setwd("/Users/Mason/Desktop/R project")
 
-local_image_path <- "/Users/Mason/Desktop/R project/stjohns.png"
-
-#local_image_path <- "/Users/Mason/Desktop/R project/orleanslogo.jpeg"
-
 # Import the data
 df <- read.csv("/Users/Mason/Downloads/St. John's Season 2024 - Combined.csv")
 
@@ -102,7 +98,7 @@ gt_table <- pitcherreporttable1 %>%
 
 # Save the 1st table as an image
 gt_table %>%
-  gtsave("pitcher_report_table1.png", path = "~/Desktop/R project")
+  gtsave("pitcher_report_table1.png", path = "~/Desktop")
 
 # Calculate the averages, maximums, and percentages per TaggedPitchType
 # Include ZSwingPercentage
@@ -198,7 +194,6 @@ table <- gt(pitcherreporttable2) %>%
     locations = cells_body(columns = everything())
   ) %>%
   tab_header(
-    title = md(paste0("<div style='display: flex; align-items: center; justify-content: center;'><img src='", local_image_path, "' style='height:35px; margin-right: 10px;'> <div style='text-align: center;'>", pitcher_name, "</div></div>")),
     subtitle = md(paste0("Trackman report Spring 2024"))
     #subtitle = md(paste0("Trackman season report"))
   ) %>%
@@ -220,7 +215,7 @@ table <- gt(pitcherreporttable2) %>%
   cols_move_to_start(columns = col_order) 
 
 # Save the 2nd table as an image
-table_image_path <- "~/Desktop/R project/pitcher_report_table2.png"
+table_image_path <- "~/Desktop/pitcher_report_table2.png"
 table %>%
   gtsave(table_image_path)
 
@@ -241,7 +236,6 @@ pitcher_data3 <- pitcher_data %>%
 
 print(head(pitcher_data3))
 
-# Calculate the averages, maximums, and percentages per TaggedPitchType
 # Include ZSwingPercentage
 pitcherreporttable3 <- pitcher_data3 %>% 
   group_by(TaggedPitchType) %>% 
@@ -344,7 +338,7 @@ table <- gt(pitcherreporttable3) %>%
 
 # Save the 3rd table as an image
 table %>%
-  gtsave("pitcher_report_table3.png", path = "~/Desktop/R project")
+  gtsave("pitcher_report_table3.png", path = "~/Desktop")
 
 setwd("/Users/Mason/Desktop/R project")
 
@@ -359,7 +353,7 @@ combined_plot <- plot_grid(p2 / p3 / p1, rel_heights = c(1, 0.8, 0))
 # Print the combined plot
 print(combined_plot)
 
-ggsave("/Users/Mason/Desktop/rimages/combinedtable.pdf", combined_plot, width = 8.5, height = 11)
+ggsave("/Users/Mason/Desktop/combinedtable.pdf", combined_plot, width = 8.5, height = 11)
 
 pitch_colors <- c('FourSeamFastBall' = rgb(210/255, 45/255, 73/255, alpha = .5),
                   'One-seam Fastball' = rgb(210/255, 45/255, 73/255, alpha = .5),
@@ -820,7 +814,7 @@ combined_page6 <- (plot15  | plot16)
 plot_pages <- list(combined_page1, combined_page2, combined_page3, combined_page4, combined_page5, combined_page6)
 
 # Start PDF device
-pdf("/Users/Mason/Desktop/rimages/combinedreport.pdf", width = 8.5, height = 11)
+pdf("/Users/Mason/Desktop/combinedreport.pdf", width = 8.5, height = 11)
 
 # Loop through each page in plot_pages and print
 for (page in plot_pages) {
@@ -830,7 +824,7 @@ for (page in plot_pages) {
 # Turn off the device
 dev.off()
 
-setwd("/Users/Mason/Desktop/rimages")
+setwd("/Users/Mason/Desktop")
 
 qpdf::pdf_combine(input = c("combinedtable.pdf", "combinedreport.pdf"),
                   output = output_pdf)
