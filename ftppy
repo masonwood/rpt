@@ -1,0 +1,53 @@
+import os
+import csv
+import io
+from ftplib import FTP
+
+# Desired columns
+DESIRED_COLUMNS = ['Date', 'Pitcher', 'PitcherThrows', 'PitcherTeam', 'Batter', 'BatterSide', 'BatterTeam', 'TaggedPitchType', 'AutoPitchType', 'PitchCall', 'KorBB', 'TaggedHitType', 'PlayResult', 'RelSpeed', 'VertRelAngle', 'HorzRelAngle', 'SpinRate', 'RelHeight', 'RelSide', 'Extension', 'InducedVertBreak', 'HorzBreak', 'PlateLocHeight', 'PlateLocSide', 'VertApprAngle', 'ExitSpeed', 'Angle', 'Direction', 'PositionAt110X', 'PositionAt110Y', 'Distance', 'LastTrackedDistance', 'Bearing', 'pfxx', 'pfxz', 'SpinAxis', 'HorzApprAngle', 'EffectiveVelo']
+
+ftp = FTP('ftp.trackmanbaseball.com')
+ftp.login(user='team', passwd='pw')
+
+
+with open(os.path.expanduser('~/Downloads/capecsvs_6_22.csv'), 'w', newline='') as output_file:
+    writer = csv.writer(output_file)
+    writer.writerow(DESIRED_COLUMNS)  # Write headers to output CSV
+
+    for month in range(1, 11):
+        for day in range(1, 32):
+            directory = f'///v3/2024/{month:02d}/{day:02d}/CSV'
+
+            try:
+                ftp.cwd(directory)
+            except Exception as e:
+                print(f'Could not navigate to {directory}. Error: {e}')
+                continue
+
+            files = ftp.nlst()
+
+            print(f'Found {len(files)} files in {directory}.')
+
+            for file in files:
+                if not file.endswith('.csv'):
+                    continue
+
+                print(f'Reading file: {file}')
+
+                data = io.BytesIO()
+                ftp.retrbinary('RETR ' + file, data.write)
+                text = data.getvalue().decode()
+
+                reader = csv.reader(io.StringIO(text))
+
+                headers = next(reader, [])
+                # Find the indices of the desired columns in the input CSV
+                column_indices = [headers.index(col) for col in DESIRED_COLUMNS if col in headers]
+
+                # Check if all desired columns exist in the current CSV
+                if len(column_indices) == len(DESIRED_COLUMNS):
+                    for row in reader:
+                        # Write only the desired columns to the output CSV
+                        writer.writerow([row[i] for i in column_indices])
+
+ftp.quit()
