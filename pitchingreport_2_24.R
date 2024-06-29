@@ -9,17 +9,17 @@ library(gridExtra)
 library(GeomMLBStadiums)
 library(qpdf)
 
-setwd("/Users/Mason/Desktop/R project")
+setwd("/Users/Name/Desktop/R project")
 
 # Import the data
-df <- read.csv("/Users/Mason/Downloads/St. John's Season 2024 - Combined.csv")
+df <- read.csv("/Users/User/Downloads/Season 2024 - Combined.csv")
 
 pitcher_data <- df %>% 
-  filter(Pitcher == "Cunningham, Tim") %>%
+  filter(Pitcher == "Name, Here") %>%
   mutate(TaggedPitchType = ifelse(TaggedPitchType == "Sinker", "Fastball", TaggedPitchType)) %>%
   filter(TaggedPitchType != "Undefined")
 
-output_pdf <- "Cunningham_2024_season.pdf"
+output_pdf <- "Playername_2024_season.pdf"
 
 pitcher_data <- pitcher_data %>%
   filter(!TaggedPitchType %in% c("0", "1", "2", "Other"))
