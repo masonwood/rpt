@@ -14,7 +14,7 @@ combined_df <- bind_rows(lapply(file_paths, read.csv))
 print(head(combined_df))
 
 calledpitches <- combined_df %>% 
-  filter(PitchCall %in% c("StrikeCalled", "BallCalled") & Catcher == "White, Sam")
+  filter(PitchCall %in% c("StrikeCalled", "BallCalled") & Catcher == "John, Sam")
 
 # Define colors for PitchCall
 pitch_colors <- c("StrikeCalled" = "green", "BallCalled" = "red")
