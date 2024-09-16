@@ -4,7 +4,7 @@ library(ggplot2)
 
 # List of direct paths to the CSV files
 file_paths <- c(
-  "/Users/Mason/Downloads/Orleans Firebirds Trackman 2024 - 6_25.csv"
+  "/Users/Mason/Downloads/Firebirds TM 2024 - 6_25.csv"
 )
 
 # Read each CSV file and combine them into one dataframe
@@ -13,7 +13,6 @@ combined_df <- bind_rows(lapply(file_paths, read.csv))
 # Check the combined dataframe
 print(head(combined_df))
 
-# Filter for called strikes, balls, and catcher "Keenan, Jimmy"
 calledpitches <- combined_df %>% 
   filter(PitchCall %in% c("StrikeCalled", "BallCalled") & Catcher == "White, Sam")
 
