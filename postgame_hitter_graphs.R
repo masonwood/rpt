@@ -13,7 +13,7 @@ df <- df %>%
 # Define a batter name that you want to plot
 desired_batter <- "Player, Name"  # Replace this with the exact name of the batter you want
 
-output_pdf <- "hitter_graph.pdf"
+output_pdf <- "/Users/Mason/Downloads/hitter_graph.pdf"
 
 pitch_colors <- c('Four-seam Fastball' = rgb(210/255, 45/255, 73/255),
                   'One-seam Fastball' = rgb(210/255, 45/255, 73/255),
