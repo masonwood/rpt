@@ -5,15 +5,15 @@ library(plotly)
 library(dplyr)
 library(tidyverse)
 
-df <- read_csv("/Users/Mason/Downloads/Orleans Firebirds Trackman 2024 - 6_29.csv")
+df <- read_csv("/Users/Mason/Downloads/csvpathhere.csv")
 
 df <- df %>%
   mutate(RelSpeed = round(RelSpeed, 1))
 
 # Define a batter name that you want to plot
-desired_batter <- "Keenan, Jimmy"  # Replace this with the exact name of the batter you want
+desired_batter <- "Player, Name"  # Replace this with the exact name of the batter you want
 
-output_pdf <- "Keenan_6_29_24.pdf"
+output_pdf <- "hitter_graph.pdf"
 
 pitch_colors <- c('Four-seam Fastball' = rgb(210/255, 45/255, 73/255),
                   'One-seam Fastball' = rgb(210/255, 45/255, 73/255),
